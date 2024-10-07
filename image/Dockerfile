@@ -1,9 +1,6 @@
 ARG BASE_IMAGE=ubuntu:24.04
 FROM $BASE_IMAGE
 
-ARG QEMU_ARCH
-#ADD x86_64_qemu-${QEMU_ARCH}-static.tar.gz /usr/bin
-
 COPY . /bd_build
 
 RUN /bd_build/prepare.sh && \

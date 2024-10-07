@@ -2,10 +2,10 @@ VERSION ?= noble-1.0.0
 ifdef BASE_IMAGE
 	BUILD_ARG = --build-arg BASE_IMAGE=$(BASE_IMAGE)
 	ifndef NAME
-		NAME = phusion/baseimage-$(subst :,-,${BASE_IMAGE})
+		NAME = azynheira/baseimage-$(subst :,-,${BASE_IMAGE})
 	endif
 else
-	NAME ?= phusion/baseimage
+	NAME ?= azynheira/baseimage
 endif
 ifdef TAG_ARCH
 	# VERSION_ARG = $(VERSION)-$(subst /,-,$(subst :,-,${BASE_IMAGE}))-$(TAG_ARCH)

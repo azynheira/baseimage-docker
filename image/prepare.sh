@@ -10,6 +10,7 @@ export INITRD=no
 mkdir -p /etc/container_environment
 echo -n no > /etc/container_environment/INITRD
 
+
 ## Enable Ubuntu Universe, Multiverse, and deb-src for main.
 if grep -E '^ID=' /etc/os-release | grep -q ubuntu; then
   sed -i 's/^#\s*\(deb.*main restricted\)$/\1/g' /etc/apt/sources.list
@@ -24,37 +25,22 @@ apt-get update
 dpkg-divert --local --rename --add /sbin/initctl
 ln -sf /bin/true /sbin/initctl
 
-## Replace the 'ischroot' tool to make it always return true.
-## Prevent initscripts updates from breaking /dev/shm.
-## https://journal.paul.querna.org/articles/2013/10/15/docker-ubuntu-on-rackspace/
-## https://bugs.launchpad.net/launchpad/+bug/974584
-dpkg-divert --local --rename --add /usr/bin/ischroot
-ln -sf /bin/true /usr/bin/ischroot
-
 # apt-utils fix for Ubuntu 16.04
 $minimal_apt_get_install apt-utils
 
 ## Install HTTPS support for APT.
 $minimal_apt_get_install apt-transport-https ca-certificates
 
-## Install add-apt-repository
-$minimal_apt_get_install software-properties-common
-
 ## Upgrade all packages.
 apt-get dist-upgrade -y --no-install-recommends -o Dpkg::Options::="--force-confold"
 
 ## Fix locale.
-case $(lsb_release -is) in
-  Ubuntu)
-    $minimal_apt_get_install language-pack-en
-    ;;
-  Debian)
-    $minimal_apt_get_install locales locales-all
-    ;;
-  *)
-    ;;
-esac
+$minimal_apt_get_install language-pack-en
+
+## Install TeX and Inkscape
+$minimal_apt_get_install texlive-base texlive-fonts-recommended texlive-fonts-extra texlive-latex-extra make inkscape
+ 
 locale-gen en_US
 update-locale LANG=en_US.UTF-8 LC_CTYPE=en_US.UTF-8
 echo -n en_US.UTF-8 > /etc/container_environment/LANG
-echo -n en_US.UTF-8 > /etc/container_environment/LC_CTYPE
+echo -n en_UK.UTF-8 > /etc/container_environment/LC_CTYPE
