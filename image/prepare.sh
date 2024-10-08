@@ -38,9 +38,9 @@ apt-get dist-upgrade -y --no-install-recommends -o Dpkg::Options::="--force-conf
 $minimal_apt_get_install language-pack-en
 
 ## Install TeX and Inkscape
-$minimal_apt_get_install texlive-base texlive-fonts-recommended texlive-fonts-extra texlive-latex-extra make inkscape
- 
-locale-gen en_US
-update-locale LANG=en_US.UTF-8 LC_CTYPE=en_US.UTF-8
-echo -n en_US.UTF-8 > /etc/container_environment/LANG
-echo -n en_UK.UTF-8 > /etc/container_environment/LC_CTYPE
+$minimal_apt_get_install texlive-base texlive-fonts-recommended texlive-fonts-extra texlive-latex-extra texlive-latex-recommended texlive-plain-generic make inkscape
+
+locale-gen en_GB
+update-locale LANG=en_GB.UTF-8 LC_CTYPE=en_GB.UTF-8
+echo -n en_GB.UTF-8 > /etc/container_environment/LANG
+echo -n en_GB.UTF-8 > /etc/container_environment/LC_CTYPE
